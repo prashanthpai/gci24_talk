@@ -1,0 +1,55 @@
+# Distributed Locking with Postgres
+
+GopherCon India 2024, Jaipur
+1 Dec 2024
+
+Prashanth Pai
+Principal Engineer, FunnelStory.ai
+
+## Distributed Locking
+
+.code pglock/example/main.go  /START OMIT/,/END OMIT/
+
+## Postgres Recipe: Ingredients
+
+1. SELECT FOR UPDATE
+2. NOWAIT
+3. SKIP LOCKED
+4. lock_timeout
+
+.image images/witch-cooking.png _ 200
+
+## Row-Level Locks: SELECT FOR UPDATE
+
+.code query1.sql
+
+- Qualifying rows are locked.
+- Other writers (UPDATE/DELETE) and lockers (FOR UPDATE) are blocked.
+- Read-only queries can still go through.
+- Lock is released when the txn is committed or rolled back.
+
+## Row-Level Locks: Avoiding block
+
+- NOWAIT: reports an error, rather than waiting
+    - if another txn is holding the lock on selected row
+- SKIP LOCKED: skips over already locked rows
+    - provides an inconsistent view of the data
+    - but can be used for queue usecase
+
+**lock_timeout**:
+
+.code query2.sql
+
+- effects of SET LOCAL last only till the end of current txn
+- auto aborts attempt to acquire the lock on timeout
+
+## Thank you
+
+Slides and code: github.com/prashanthpai/gci24_talk
+
+.image images/power-to-the-masses.png _ 350
+
+## Fin
+
+# Like them gopher images ?
+# Thanks to: https://github.com/egonelbre/gophers

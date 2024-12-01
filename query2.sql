@@ -1,0 +1,4 @@
+BEGIN;
+SET LOCAL lock_timeout = '5s'
+-- Use SELECT FOR UPDATE
+COMMIT;
