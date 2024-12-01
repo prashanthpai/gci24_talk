@@ -16,6 +16,7 @@ Principal Engineer, FunnelStory.ai
 2. NOWAIT
 3. SKIP LOCKED
 4. lock_timeout
+5. transaction_timeout
 
 .image images/witch-cooking.png _ 200
 

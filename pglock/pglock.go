@@ -28,7 +28,7 @@ func New(db *sql.DB, key string) *Lock {
 	return &Lock{
 		db:           db,
 		insertSQL:    "INSERT INTO pglocks (key) VALUES ($1) ON CONFLICT DO NOTHING",
-		lockSQL:      "SELECT 1 FROM pglocks WHERE key = $1 FOR UPDATE SKIP LOCKED",
+		lockSQL:      "SELECT 1 FROM pglocks WHERE key = $1 FOR UPDATE SKIP LOCKED", // non-blocking
 		checkLockSQL: "SELECT 1 FROM pglocks WHERE key = $1 FOR UPDATE NOWAIT",
 		key:          key,
 	}
